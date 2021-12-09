@@ -29,34 +29,41 @@ class WeatherPopulated extends StatelessWidget {
             child: Center(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 48),
-                  _WeatherIcon(/*condition: weather.condition*/),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _WeatherIcon(/*condition: weather.condition*/),
+                      Text(
+                        weather.formattedTemperature(units),
+                        style: theme.textTheme.headline2?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+
                   Text(
                     '${weather.location.cityName},${weather.location.stateName}',
-                    style: theme.textTheme.headline2?.copyWith(
+                    style: theme.textTheme.headline6?.copyWith(
                       fontWeight: FontWeight.w200,
                     ),
                   ),
-                  Text(
-                    weather.formattedTemperature(units),
-                    style: theme.textTheme.headline3?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  const SizedBox(height: 48),
                   Text(
                     '''Last Updated at ${TimeOfDay.fromDateTime(DateTime.parse(weather.timestamp)).format(context)}''',
                   ),
-                  SizedBox(height: 48),
-                  OutlinedButton(
-                      child: const Text("Search Again"),
-                      style: OutlinedButton.styleFrom(
-                        primary: Colors.white
-                      ),
-                      onPressed: () {
-                        context.read<WeatherCubit>().reset();
-                      }
-                  )
+                  // SizedBox(height: 48),
+                  // OutlinedButton(
+                  //     child: const Text("Search Again"),
+                  //     style: OutlinedButton.styleFrom(
+                  //       primary: Colors.white
+                  //     ),
+                  //     onPressed: () {
+                  //       context.read<WeatherCubit>().reset();
+                  //     }
+                  // )
                 ],
               ),
             ),
@@ -77,7 +84,7 @@ class _WeatherIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '☀️',//condition.toEmoji,
+      '☀️', //condition.toEmoji,
       style: const TextStyle(fontSize: _iconSize),
     );
   }
